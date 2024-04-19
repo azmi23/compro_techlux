@@ -3,7 +3,9 @@ export interface Props{
     title:string,
     navItems:{
         itemText:string,
-        itemLink:string
+        itemLink:string,
+        itemType: string,
+        itemIcon: string,
     }[]
 }
 
@@ -17,8 +19,12 @@ const {title, navItems} = Astro.props
     <ul class="space-y-3 font-medium md:text-lg text-heading-3">
         {navItems.map((navItem)=>(
             <li>
-                <a href={navItem.itemLink} class="transition hover:text-primary">
-                    {navItem.itemText}
+                <a href={navItem.itemLink} class="transition inline-flex items-center" target={navItem.itemType ? '_blank': '_self'}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d={navItem.itemIcon}></path>
+                        {() => navItem.itemType === 'mail' ? (<polyline points="22,6 12,13 2,6"></polyline>) : ''}
+                    </svg>
+                    <span class="ml-2">{navItem.itemText}</span>
                 </a>
             </li>
         ))
